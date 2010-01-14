@@ -286,7 +286,7 @@ public:
                      const string& Value, bool MultiArg = false);
 
   // Prints option name followed by message.  Always returns true.
-  bool error(const string &Message, const string& ArgName = string());
+  bool error(const string &Message, string ArgName = string());
 
 public:
   inline int getNumOccurrences() const { return NumOccurrences; }
