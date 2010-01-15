@@ -211,9 +211,7 @@ static bool CommaSeparateAndAddOccurence(Option *Handler, unsigned pos,
   return false;
 }
 
-/// ProvideOption - For Value, this differentiates between an empty value ("")
-/// and a null value (string()).  The later is accepted for arguments that
-/// don't allow a value (-foo) the former is rejected (-foo=).
+/// ProvideOption - Empty values ("") are not allowed.  Sorry (dkoes)
 static inline bool ProvideOption(Option *Handler, const string& ArgName,
                                  string& Value, int argc, char **argv,
                                  int &i) {
@@ -223,7 +221,7 @@ static inline bool ProvideOption(Option *Handler, const string& ArgName,
   // Enforce value requirements
   switch (Handler->getValueExpectedFlag()) {
   case ValueRequired:
-    if (Value.data() == 0) {       // No value specified?
+    if (Value.size() == 0) {       // No value specified?
       if (i+1 >= argc)
         return Handler->error("requires a value!");
       // Steal the next argument, like for '-o filename'
