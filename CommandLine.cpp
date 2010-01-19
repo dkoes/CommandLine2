@@ -1060,7 +1060,12 @@ public:
 
   void operator=(bool Value) {
     if (Value == false) return;
+    print();
+    exit(1);
+  }
 
+  void print()
+  {
     // Get all the options.
     vector<Option*> PositionalOpts;
     vector<Option*> SinkOpts;
@@ -1128,9 +1133,6 @@ public:
           E = MoreHelp.end(); I != E; ++I)
       cout << *I;
     MoreHelp.clear();
-
-    // Halt the program since help information was printed
-    exit(1);
   }
 };
 } // End anonymous namespace
@@ -1158,13 +1160,7 @@ void cl::SetHelpMessage(const char *programname, const char *overview)
 
 // Utility function for printing the help message.
 void cl::PrintHelpMessage() {
-  // This looks weird, but it actually prints the help message. The
-  // NormalPrinter variable is a HelpPrinter and the help gets printed when
-  // its operator= is invoked. That's because the "normal" usages of the
-  // help printer is to be assigned true/false depending on whether the
-  // --help option was given or not. Since we're circumventing that we have
-  // to make it look like --help was given, so we assign true.
-  NormalPrinter = true;
+  NormalPrinter.print();
 }
 
 
