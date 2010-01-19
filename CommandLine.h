@@ -71,7 +71,7 @@ namespace dont_use
 }
 
 template <typename T>
-struct is_class
+struct cl_is_class
 {
   // is_class<> metafunction due to Paul Mensonides (leavings@attbi.com). For
   // more details:
@@ -207,7 +207,7 @@ class Option {
   Option *NextRegistered; // Singly linked list of registered options.
 public:
   const char *ArgStr;     // The argument string itself (ex: "help", "o")
-  const char *HelpStr;    // The descriptive text message for --help
+  string HelpStr;    // The descriptive text message for --help
   const char *ValueStr;   // String describing what the value of this option is
 
   inline enum NumOccurrencesFlag getNumOccurrencesFlag() const {
@@ -237,7 +237,7 @@ public:
   // Accessor functions set by OptionModifiers
   //
   void setArgStr(const char *S) { ArgStr = S; }
-  void setDescription(const char *S) { HelpStr = S; }
+  void setDescription(const string& S) { HelpStr = S; }
   void setValueStr(const char *S) { ValueStr = S; }
 
   void setFlag(unsigned Flag, unsigned FlagMask) {
@@ -301,8 +301,9 @@ public:
 
 // desc - Modifier to set the description shown in the --help output...
 struct desc {
-  const char *Desc;
+  const string Desc;
   desc(const char *Str) : Desc(Str) {}
+  desc(const string& Str) : Desc(Str) {}
   void apply(Option &O) const { O.setDescription(Desc); }
 };
 
@@ -880,7 +881,7 @@ template <class DataType, bool ExternalStorage = false,
           class ParserClass = parser<DataType> >
 class opt : public Option,
             public opt_storage<DataType, ExternalStorage,
-                               is_class<DataType>::value> {
+                               cl_is_class<DataType>::value> {
   ParserClass Parser;
 
   virtual bool handleOccurrence(unsigned pos, const string& ArgName,
@@ -995,6 +996,7 @@ EXTERN_TEMPLATE_INSTANTIATION(class opt<int>);
 EXTERN_TEMPLATE_INSTANTIATION(class opt<std::string>);
 EXTERN_TEMPLATE_INSTANTIATION(class opt<char>);
 EXTERN_TEMPLATE_INSTANTIATION(class opt<bool>);
+EXTERN_TEMPLATE_INSTANTIATION(class opt<double>);
 
 //===----------------------------------------------------------------------===//
 // list_storage class
@@ -1424,6 +1426,7 @@ void PrintVersionMessage();
 // --help option had been given on the command line.
 // NOTE: THIS FUNCTION TERMINATES THE PROGRAM!
 void PrintHelpMessage();
+void SetHelpMessage(const char *programname, const char *overview);
 
 } // End namespace cl
 

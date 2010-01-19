@@ -54,6 +54,7 @@ TEMPLATE_INSTANTIATION(class opt<int>);
 TEMPLATE_INSTANTIATION(class opt<std::string>);
 TEMPLATE_INSTANTIATION(class opt<char>);
 TEMPLATE_INSTANTIATION(class opt<bool>);
+TEMPLATE_INSTANTIATION(class opt<double>);
 }  // end namespace llvm::cl
 
 void Option::anchor() {}
@@ -71,7 +72,8 @@ void parser<char>::anchor() {}
 
 // Globals for name and overview of program.  Program name is not a string to
 // avoid static ctor/dtor issues.
-static char ProgramName[80] = "<premain>";
+#define DEFAULT_PROGRAM_NAME "<program>"
+static string ProgramName(DEFAULT_PROGRAM_NAME);
 static const char *ProgramOverview = 0;
 
 // This collects additional help to be printed.
@@ -506,11 +508,13 @@ void cl::ParseCommandLineOptions(int argc, char **argv,
   }
 
   // Copy the program name into ProgName, making sure not to overflow it.
-  std::string ProgName = filesystem::path(argv[0]).filename();
-  if (ProgName.size() > 79) ProgName.resize(79);
-  strcpy(ProgramName, ProgName.c_str());
+  if(ProgramName == DEFAULT_PROGRAM_NAME)
+  {
+	  ProgramName = filesystem::path(argv[0]).filename();
+  }
 
-  ProgramOverview = Overview;
+  if(Overview)
+	  ProgramOverview = Overview;
   bool ErrorParsing = false;
 
   // Check out the positional arguments to collect information about them.
@@ -1145,7 +1149,12 @@ static cl::opt<HelpPrinter, true, parser<bool> >
 HHOp("help-hidden", cl::desc("Display all available options"),
      cl::location(HiddenPrinter), cl::Hidden, cl::ValueDisallowed);
 
-
+//dkoes, manipulate help message before parsing commandline
+void cl::SetHelpMessage(const char *programname, const char *overview)
+{
+	if(programname) ProgramName = programname;
+	if(overview) ProgramOverview = overview;
+}
 
 // Utility function for printing the help message.
 void cl::PrintHelpMessage() {
