@@ -477,7 +477,7 @@ static void ExpandResponseFiles(unsigned argc, char** argv,
         // itself contain additional @file options; any such options will be
         // processed recursively.")
 
-        if (respFilePtr) {
+        if (respFilePtr.data()) {
           ParseCStringVector(newArgv, respFilePtr.data());
           continue;
         }
