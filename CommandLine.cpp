@@ -20,8 +20,6 @@
 #include <cerrno>
 #include <cstdlib>
 #include <string>
-#include <tr1/unordered_map>
-#include <tr1/unordered_set>
 #include <iostream>
 #include <algorithm>
 #include <cstring>
@@ -29,9 +27,9 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/lexical_cast.hpp>
-
+#include <boost/unordered_map.hpp>
+#include <boost/unordered_set.hpp>
 using namespace std;
-using namespace tr1;
 using namespace boost;
 using namespace cl;
 
