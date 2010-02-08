@@ -1093,7 +1093,7 @@ public:
     }
 
     // Sort the options list alphabetically.
-    qsort(Opts.data(), Opts.size(), sizeof(Opts[0]), OptNameCompare);
+    qsort(&Opts[0], Opts.size(), sizeof(Opts[0]), OptNameCompare);
 
     if (ProgramOverview)
       cout << "OVERVIEW: " << ProgramOverview << "\n";
