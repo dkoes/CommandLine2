@@ -57,6 +57,18 @@ TEMPLATE_INSTANTIATION(class opt<double>);
 
 void Option::anchor() {}
 void basic_parser_impl::anchor() {}
+
+#ifdef __INTEL_COMPILER
+void basic_parser<bool>::anchor() {}
+void basic_parser<boolOrDefault>::anchor() {}
+void basic_parser<int>::anchor() {}
+void basic_parser<unsigned>::anchor() {}
+void basic_parser<double>::anchor() {}
+void basic_parser<float>::anchor() {}
+void basic_parser<std::string>::anchor() {}
+void basic_parser<char>::anchor() {}
+#endif
+
 void parser<bool>::anchor() {}
 void parser<boolOrDefault>::anchor() {}
 void parser<int>::anchor() {}

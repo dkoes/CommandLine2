@@ -578,6 +578,9 @@ template<class DataType>
 class basic_parser : public basic_parser_impl {
 public:
   typedef DataType parser_data_type;
+#ifdef __INTEL_COMPILER
+  virtual void anchor();
+#endif
 };
 
 //--------------------------------------------------
