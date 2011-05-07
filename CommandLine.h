@@ -21,7 +21,9 @@
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
+#ifndef BOOST_FILESYSTEM_VERSION
 #define BOOST_FILESYSTEM_VERSION 2
+#endif
 
 #include <cassert>
 #include <climits>
