@@ -21,9 +21,6 @@
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
-#ifndef BOOST_FILESYSTEM_VERSION
-#define BOOST_FILESYSTEM_VERSION 2
-#endif
 
 #include <cassert>
 #include <climits>
@@ -877,7 +874,7 @@ class opt : public Option,
     return Parser.getValueExpectedFlagDefault();
   }
   virtual void getExtraOptionNames(vector<const char*> &OptionNames) {
-    return Parser.getExtraOptionNames(OptionNames);
+	  Parser.getExtraOptionNames(OptionNames);
   }
 
   // Forward printing stuff to the parser...
@@ -1031,7 +1028,7 @@ class list : public Option, public list_storage<DataType, Storage> {
     return Parser.getValueExpectedFlagDefault();
   }
   virtual void getExtraOptionNames(vector<const char*> &OptionNames) {
-    return Parser.getExtraOptionNames(OptionNames);
+	  Parser.getExtraOptionNames(OptionNames);
   }
 
   virtual bool handleOccurrence(unsigned pos, const string& ArgName, const string& Arg){
@@ -1230,7 +1227,7 @@ class bits : public Option, public bits_storage<DataType, Storage> {
     return Parser.getValueExpectedFlagDefault();
   }
   virtual void getExtraOptionNames(vector<const char*> &OptionNames) {
-    return Parser.getExtraOptionNames(OptionNames);
+	  Parser.getExtraOptionNames(OptionNames);
   }
 
   virtual bool handleOccurrence(unsigned pos, const string& ArgName, const string& Arg){
